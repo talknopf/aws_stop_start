@@ -3,7 +3,7 @@ function usage(){
 	echo "Usage: $0 -a <action> -i <instance-id>"
 	echo "		-a action should be either start or stop and is mandatory"
 	echo "		-i will indicate the instance id you are acting on, the parameter is mandatory"
-	echo "		Optional: if you add the -install the script will install all of it's dependencies"
+	echo "		Optional: if you add the -install the script will install all of it's dependencies and exit"
 	exit 1
 }
 
@@ -72,4 +72,6 @@ echo "Will now $action the machine with instance id: $aws_instance_id"
 [[ $INSTALL ]] && echo "Please run go to: https://docs.aws.amazon.com/cli/latest/reference/configure/ and run procedure"
 [[ $INSTALL ]] && exit 0
 
-aws ec2 ${action}-instances --instance-ids $aws_instance_id
+aws ec2 ${action}-instances --instance-ids "$aws_instance_id" && echo "Will sleep for 20 second to allow the machi to start and allocate ip" && sleep 20 &&
+aws ec2 describe-instances --instance-ids "$aws_instance_id"
+
