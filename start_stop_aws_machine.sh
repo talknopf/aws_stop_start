@@ -50,7 +50,9 @@ while getopts "i:a:install" arg; do
         ;;
     a)
         export action="$OPTARG"
-        if [ $action != "start" ] || [ $action != "stop" ]; then
+        if [ $action == "start" ] || [ $action == "stop" ]; then
+        	echo "Will $action the instance"
+        else
         	echo "instance action May only be start/stop.."
         	exit 1
         fi 
