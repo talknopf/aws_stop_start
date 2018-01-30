@@ -1,9 +1,9 @@
 #!/bin/bash
 function usage(){
-	echo "Usage: $0 -a <action> -i <instance-id>"
+	echo "Usage: $0 -a <action> -i <instance-id> OR $0 -u"
 	echo "		-a action should be either start or stop and is mandatory"
 	echo "		-i will indicate the instance id you are acting on, the parameter is mandatory"
-	echo "		Optional: if you add the -install the script will install all of it's dependencies and exit"
+	echo "		Optional: if you add the -u the script will install all of it's dependencies and exit"
 	exit 1
 }
 
@@ -43,7 +43,7 @@ if [ ! `command -v aws` ]; then
 fi
 
 # read variables
-while getopts "i:a:install" arg; do
+while getopts "i:a:u" arg; do
   case $arg in
     i)
         export aws_instance_id="$OPTARG"
@@ -57,7 +57,7 @@ while getopts "i:a:install" arg; do
         	exit 1
         fi 
         ;;
-    install)
+    u)
         export INSTALL=true
         echo
         ;;
